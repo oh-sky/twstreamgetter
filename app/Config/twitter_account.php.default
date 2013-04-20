@@ -1,0 +1,7 @@
+<?php
+/**
+ * twitter account settings
+ */
+
+$config['twitter_account'] = '';
+$config['twitter_password'] = '';
