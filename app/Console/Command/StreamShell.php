@@ -12,13 +12,16 @@ class StreamShell extends AppShell {
 		$curl_ch = curl_init();
 		curl_setopt($curl_ch, CURLOPT_URL, "https://stream.twitter.com/1.1/statuses/filter.json");
 		curl_setopt($curl_ch, CURLOPT_POST, 1);
-		//		curl_setopt($curl_ch, CURLOPT_POSTFIELDS, "track=".implode(',',$keywords));
-		curl_setopt($curl_ch, CURLOPT_POSTFIELDS, "track=#{$this->args[0]}");
+		curl_setopt($curl_ch, CURLOPT_POSTFIELDS, "track=#".implode(',#',$this->args));
 		curl_setopt($curl_ch, CURLOPT_HEADER, 0);
 		curl_setopt($curl_ch, CURLOPT_USERPWD, "{$twitter_account}:{$twitter_password}");
 
-		//Streaming APIから受信したものをタレナガシ
-		curl_exec($curl_ch);
+		while(true){
+			//Streaming APIから受信したものをタレナガシ
+			curl_exec($curl_ch);
+			//接続が切れたら、少々時間をおいて再接続する
+			sleep(30);
+		}
 
 		curl_close($curl_ch);
 	}
